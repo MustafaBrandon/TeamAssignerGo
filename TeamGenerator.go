@@ -36,9 +36,6 @@ func readMemberList() []string {
 }
 
 func randomizeAndAssign(names []string, grpSiz int) {
-	//----------Inputs---------
-	//names := []string{"Sam", "Bill", "Devon", "Erin", "Fali", "Gabby", "Hunter", "Isaac", "Julia", "Kaylee"}
-
 	//----------Vars-----------
 	var numStu int = len(names)
 	var numGrp int = (numStu / grpSiz)
@@ -84,7 +81,11 @@ func randomizeAndAssign(names []string, grpSiz int) {
 		test[G-1] = append(test[G-1], names[n])
 	}
 	fmt.Println("test:")
-	fmt.Println(test)
+
+	for iCount := 0; iCount < len(test); iCount++ {
+		fmt.Println(test[iCount])
+		fmt.Println("\n")
+	}
 
 }
 
