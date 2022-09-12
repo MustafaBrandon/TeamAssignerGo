@@ -6,12 +6,13 @@ import (
 	"log"
 	"math/rand"
 	"os"
+	"time"
 )
 
 func main() {
-	//var names []string = readMemberList()
+	var names []string = readMemberList()
 	var grpSiz int = 3
-	randomizeAndAssign(grpSiz)
+	randomizeAndAssign(names, grpSiz)
 }
 
 func readMemberList() []string {
@@ -34,9 +35,9 @@ func readMemberList() []string {
 	return students
 }
 
-func randomizeAndAssign(grpSiz int) {
+func randomizeAndAssign(names []string, grpSiz int) {
 	//----------Inputs---------
-	names := []string{"Sam", "Bill", "Devon", "Erin", "Fali", "Gabby", "Hunter", "Isaac", "Julia", "Kaylee"}
+	//names := []string{"Sam", "Bill", "Devon", "Erin", "Fali", "Gabby", "Hunter", "Isaac", "Julia", "Kaylee"}
 
 	//----------Vars-----------
 	var numStu int = len(names)
