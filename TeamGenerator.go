@@ -74,7 +74,7 @@ func randomizeAndAssign(grpSiz int) {
 	//This gives a random teams spot out. grpsL is the available spots for the team
 	//G is the number of the team
 	for n := 0; n < numStu; n++ {
-
+		rand.Seed(time.Now().UnixNano())
 		RN := rand.Intn(len(grpsL))
 		G := grpsL[RN]
 		grpsL[RN] = grpsL[len(grpsL)-1]
