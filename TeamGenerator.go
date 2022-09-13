@@ -11,7 +11,10 @@ import (
 
 func main() {
 	var names []string = readMemberList()
-	var grpSiz int = 3
+	fmt.Println("Enter the group size: ")
+	var grpSiz int 
+	fmt.Scanln(&grpSiz)
+
 	randomizeAndAssign(names, grpSiz)
 }
 
