@@ -1,52 +1,40 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
-	"log"
 	"math/rand"
-	"os"
+	"strconv"
 	"time"
 )
 
 func main() {
-	var names []string = readMemberList()
-	var grpSiz int = 3
-	randomizeAndAssign(names, grpSiz)
-}
+	//----------Inputs---------
+	names := []string{"a", "b", "d", "e", "f", "g", "h", "i", "j", "k"}
+	//var grpSiz int = 3
+	var numGrp int = 3
 
-func readMemberList() []string {
-	//open student_names file
-	file, err := os.Open("student_names.txt")
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer file.Close()
-
-	scanner := bufio.NewScanner(file)
-
-	//Create Slice
-	var students []string
-	//Add student names from text file to slice
-	for scanner.Scan() {
-		students = append(students, scanner.Text())
-	}
-
-	return students
-}
-
-func randomizeAndAssign(names []string, grpSiz int) {
+	//fmt.Println(names)
+	//fmt.Println(grpSiz)
+	//fmt.Println("-------")
 	//----------Vars-----------
 	var numStu int = len(names)
-	var numGrp int = (numStu / grpSiz)
-	var grpRm int = numStu - (grpSiz * numGrp)
+	//var numGrp int = (numStu / grpSiz)
+	var grpSiz int = numStu/numGrp
+	//var grpRm int = numStu - (grpSiz * numGrp)
+	var grpRm int = numStu % numGrp
 
+	//fmt.Println(numStu)
+	//fmt.Println(numGrp)
+	//fmt.Println(grpSiz)
+	//fmt.Println(grpRm)
+	//fmt.Println("-------")
 	//----------Spots----------
 	grpRang := makeRange(1, numGrp)
 	grpsL := []int{}
 
 	for i := 0; i < grpSiz; i++ {
 		grpsL = append(grpsL, grpRang...)
+		//fmt.Println(grpsL)
 	}
 
 	for grpRm > 0 {
@@ -60,17 +48,7 @@ func randomizeAndAssign(names []string, grpSiz int) {
 	}
 
 	//----------Assigner-------
-	//Make an array of arrays. Each array in the array is a team.
 
-	test := [][]string{}
-
-	for i := 0; i < numGrp; i++ {
-		groupArray := []string{}
-		test = append(test, groupArray)
-	}
-
-	//This gives a random teams spot out. grpsL is the available spots for the team
-	//G is the number of the team
 	for n := 0; n < numStu; n++ {
 		rand.Seed(time.Now().UnixNano())
 		RN := rand.Intn(len(grpsL))
@@ -78,13 +56,8 @@ func randomizeAndAssign(names []string, grpSiz int) {
 		grpsL[RN] = grpsL[len(grpsL)-1]
 		grpsL[len(grpsL)-1] = 0
 		grpsL = grpsL[:len(grpsL)-1]
-		test[G-1] = append(test[G-1], names[n])
-	}
-	fmt.Println("test:")
+		fmt.Println(names[n] + " : " + strconv.Itoa(G))
 
-	for iCount := 0; iCount < len(test); iCount++ {
-		fmt.Println(test[iCount])
-		fmt.Println("\n")
 	}
 
 }
@@ -96,5 +69,3 @@ func makeRange(min, max int) []int {
 	}
 	return a
 }
-
-func printTeams() {}
