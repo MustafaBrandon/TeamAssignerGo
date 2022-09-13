@@ -12,10 +12,14 @@ import (
 func main() {
 	var names []string = readMemberList()
 	fmt.Println("Enter the group size: ")
-	var grpSiz int 
+	var grpSiz int
 	fmt.Scanln(&grpSiz)
 
-	randomizeAndAssign(names, grpSiz)
+	var teams [][]string = randomizeAndAssign(names, grpSiz)
+
+	//Output the teams to a teams.txt file
+	printTeams(teams)
+
 }
 
 func readMemberList() []string {
@@ -38,7 +42,7 @@ func readMemberList() []string {
 	return students
 }
 
-func randomizeAndAssign(names []string, grpSiz int) {
+func randomizeAndAssign(names []string, grpSiz int) [][]string {
 	//----------Vars-----------
 	var numStu int = len(names)
 	var numGrp int = (numStu / grpSiz)
@@ -65,11 +69,11 @@ func randomizeAndAssign(names []string, grpSiz int) {
 	//----------Assigner-------
 	//Make an array of arrays. Each array in the array is a team.
 
-	test := [][]string{}
+	teams := [][]string{}
 
 	for i := 0; i < numGrp; i++ {
 		groupArray := []string{}
-		test = append(test, groupArray)
+		teams = append(teams, groupArray)
 	}
 
 	//This gives a random teams spot out. grpsL is the available spots for the team
@@ -81,14 +85,10 @@ func randomizeAndAssign(names []string, grpSiz int) {
 		grpsL[RN] = grpsL[len(grpsL)-1]
 		grpsL[len(grpsL)-1] = 0
 		grpsL = grpsL[:len(grpsL)-1]
-		test[G-1] = append(test[G-1], names[n])
+		teams[G-1] = append(teams[G-1], names[n])
 	}
-	fmt.Println("test:")
 
-	for iCount := 0; iCount < len(test); iCount++ {
-		fmt.Println(test[iCount])
-		fmt.Println("\n")
-	}
+	return teams
 
 }
 
@@ -100,4 +100,25 @@ func makeRange(min, max int) []int {
 	return a
 }
 
-func printTeams() {}
+func printTeams(teams [][]string) {
+	f, err := os.Create("teams.txt")
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	defer f.Close()
+
+	for i := 0; i < len(teams); i++ {
+		teamString := fmt.Sprintf("Team %d\n", i+1)
+		f.WriteString(teamString)
+		for j := 0; j < len(teams[i]); j++ {
+			_, err2 := f.WriteString(teams[i][j] + "\n")
+
+			if err2 != nil {
+				log.Fatal(err2)
+			}
+		}
+		f.WriteString("\n")
+	}
+}
