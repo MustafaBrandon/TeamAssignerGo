@@ -20,6 +20,8 @@ func main() {
 	//Output the teams to a teams.txt file
 	printTeams(teams)
 
+	fmt.Println("Your teams have been created and listed in the teams.txt file which can be found in your local directory.")
+
 }
 
 func readMemberList() []string {
